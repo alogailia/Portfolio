@@ -2,7 +2,7 @@
 
 Personal portfolio website showcasing my experience, projects, and skills as a Data Analyst and Information Scientist.
 
-🌐 **Live Site:** [yourusername.github.io/portfolio](https://yourusername.github.io/portfolio)
+🌐 **Live Site:** [alogailia.github.io/portfolio](https://alogailia.github.io/portfolio)
 
 ---
 

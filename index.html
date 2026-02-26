@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ali Al-Ogaili — Data Analyst & Information Scientist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --border: #1e1e2e;
+    --accent: #4fffb0;
+    --accent2: #7b8cff;
+    --text: #e8e8f0;
+    --muted: #6b6b85;
+    --card: #13131c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── Noise texture overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.4;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(79,255,176,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79,255,176,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%);
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(79,255,176,0.08) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    max-width: 900px;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(79,255,176,0.08);
+    border: 1px solid rgba(79,255,176,0.2);
+    color: var(--accent);
+    padding: 0.35rem 0.9rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  h1 .accent { color: var(--accent); }
+  h1 .dim { color: var(--muted); }
+
+  .hero-sub {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 560px;
+    font-weight: 300;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0f;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-primary:hover {
+    background: #6fffc0;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(79,255,176,0.3);
+  }
+
+  .btn-outline {
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 4rem;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Sections ── */
+  section {
+    padding: 6rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+    line-height: 1.1;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ── Experience ── */
+  .exp-list { display: flex; flex-direction: column; gap: 0; }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  .exp-item:first-child { border-top: 1px solid var(--border); }
+
+  .exp-date {
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-weight: 400;
+    padding-top: 0.2rem;
+    font-style: italic;
+  }
+
+  .exp-role {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+
+  .exp-company {
+    color: var(--accent);
+    font-size: 0.88rem;
+    font-weight: 500;
+    margin-bottom: 0.9rem;
+  }
+
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .exp-bullets li {
+    font-size: 0.88rem;
+    color: var(--muted);
+    padding-left: 1.1rem;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .exp-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.75rem;
+    top: 0.05rem;
+  }
+
+  /* ── Projects ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(79,255,176,0.04), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .project-card:hover {
+    border-color: rgba(79,255,176,0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  }
+
+  .project-card:hover::before { opacity: 1; }
+
+  .project-tag {
+    display: inline-block;
+    background: rgba(123,140,255,0.12);
+    color: var(--accent2);
+    border: 1px solid rgba(123,140,255,0.2);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+
+  .project-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .project-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+  }
+
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tech-chip {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.72rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    margin-top: 1rem;
+    transition: gap 0.2s;
+  }
+
+  .project-link:hover { gap: 0.6rem; }
+
+  /* ── Skills ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-group {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+  }
+
+  .skill-group-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .skill-tag {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 0.8rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 6px;
+    font-weight: 400;
+    transition: all 0.2s;
+  }
+
+  .skill-tag:hover {
+    border-color: rgba(79,255,176,0.4);
+    color: var(--accent);
+    background: rgba(79,255,176,0.05);
+  }
+
+  /* ── Education ── */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .edu-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .edu-card.featured {
+    border-color: rgba(79,255,176,0.25);
+    background: linear-gradient(135deg, rgba(79,255,176,0.04) 0%, var(--card) 60%);
+  }
+
+  .edu-badge {
+    display: inline-block;
+    background: rgba(79,255,176,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(79,255,176,0.2);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+
+  .edu-degree {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    line-height: 1.3;
+  }
+
+  .edu-school {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .edu-detail {
+    font-size: 0.8rem;
+    color: var(--accent2);
+    font-weight: 500;
+  }
+
+  /* ── Contact ── */
+  .contact-wrapper {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .contact-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .contact-body {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--text);
+    padding: 1rem 1.25rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.88rem;
+    transition: all 0.2s;
+  }
+
+  .contact-link:hover {
+    border-color: rgba(79,255,176,0.3);
+    color: var(--accent);
+    background: rgba(79,255,176,0.04);
+    transform: translateX(4px);
+  }
+
+  .contact-icon {
+    width: 36px; height: 36px;
+    background: rgba(79,255,176,0.08);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 6rem 1.5rem 3rem; }
+    section { padding: 4rem 1.5rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .contact-wrapper { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Ali<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Open to full-time opportunities</div>
+    <h1>Ali<br><span class="accent">Al-Ogaili</span><span class="dim">.</span></h1>
+    <p class="hero-sub">Data Analyst & Information Scientist. I turn complex datasets into decisions that move organizations forward — from dashboards to machine learning models.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">Get in touch</a>
+      <a href="#experience" class="btn-outline">View my work</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">$15<span>M+</span></div>
+        <div class="stat-label">Funds managed</div>
+      </div>
+      <div>
+        <div class="stat-num">200<span>+</span></div>
+        <div class="stat-label">Projects scoped</div>
+      </div>
+      <div>
+        <div class="stat-num">4.0<span>/4.0</span></div>
+        <div class="stat-label">Master's GPA</div>
+      </div>
+      <div>
+        <div class="stat-num">3<span>×</span></div>
+        <div class="stat-label">Published studies</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Career</div>
+  <div class="section-title">Professional Experience</div>
+  <div class="exp-list">
+
+    <div class="exp-item">
+      <div class="exp-date">Sep 2025 – Dec 2025</div>
+      <div>
+        <div class="exp-role">Data Analyst Project Consultant</div>
+        <div class="exp-company">University of Michigan — School of Information</div>
+        <ul class="exp-bullets">
+          <li>Scoped and managed 50+ client-based projects, applying data-driven methods to evaluate feasibility and alignment with UMSI course objectives.</li>
+          <li>Used Salesforce CRM to track project progress, maintain data integrity, and generate reports informing faculty and leadership decisions.</li>
+          <li>Conducted user research and client interviews, synthesizing insights into actionable project proposals.</li>
+          <li>Collaborated across teams to prepare a portfolio of 200+ high-quality experiential learning projects.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">May 2025 – Sep 2025</div>
+      <div>
+        <div class="exp-role">Data Analyst Intern</div>
+        <div class="exp-company">FORVIA Faurecia — Auburn Hills, MI</div>
+        <ul class="exp-bullets">
+          <li>Designed and delivered interactive dashboards in Power BI and Excel that identified profitability of business programs and highlighted acquisition targets.</li>
+          <li>Developed an integrated data file linking SAP, Magritte, and S&P Global datasets, enabling a unified view of product mix distribution.</li>
+          <li>Automated recurring reporting processes, reducing manual data prep time and improving pricing accuracy.</li>
+          <li>Trained and mentored incoming interns, improving team efficiency and reducing onboarding ramp-up time.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">Jan 2025 – Apr 2025</div>
+      <div>
+        <div class="exp-role">Assistant Research Analyst</div>
+        <div class="exp-company">University of Michigan — School for Environment and Sustainability</div>
+        <ul class="exp-bullets">
+          <li>Supported a graduate research team with data organization, cleaning, and preparation for analysis.</li>
+          <li>Cleaned and standardized raw data files to ensure consistency and integrity across research outputs.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">Aug 2023 – Aug 2024</div>
+      <div>
+        <div class="exp-role">Grants Analyst</div>
+        <div class="exp-company">The Leona Group — Okemos, MI</div>
+        <ul class="exp-bullets">
+          <li>Secured over $5,000,000 in funding through successful grant applications supporting 11 Midwest schools.</li>
+          <li>Ensured allocation of over $10,000,000 in funds, resolving discrepancies and improving financial workflows.</li>
+          <li>Identified 15+ competitive grant opportunities, achieving a 25% increase in funding potential through strategic collaborations.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">Aug 2022 – Aug 2023</div>
+      <div>
+        <div class="exp-role">Research Analyst Intern</div>
+        <div class="exp-company">Institute for Social Policy and Understanding — Remote</div>
+        <ul class="exp-bullets">
+          <li>Conducted data analysis using STATA, contributing to 3 published research studies on Muslim/Arab American business growth.</li>
+          <li>Designed and led fundraising campaigns raising over $6,500 and increasing donor participation by 30%.</li>
+          <li>Streamlined communication processes, reducing costs by 5% and boosting donor engagement.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Work</div>
+  <div class="section-title">Featured Projects</div>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-tag">Machine Learning</div>
+      <div class="project-title">GOAT Soccer Analysis</div>
+      <div class="project-desc">Performance analysis of Messi and Ronaldo using machine learning models to predict goals scored and assists, improving prediction accuracy by 70%.</div>
+      <div class="project-tech">
+        <span class="tech-chip">Python</span>
+        <span class="tech-chip">pandas</span>
+        <span class="tech-chip">scikit-learn</span>
+        <span class="tech-chip">matplotlib</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-tag">Project Management</div>
+      <div class="project-title">Digital Divide in Rural America</div>
+      <div class="project-desc">Led analysis of 10 broadband expansion case studies, projecting a 15% rise in remote jobs. Coordinated with 15 stakeholders including ISPs and policymakers to design rural broadband solutions.</div>
+      <div class="project-tech">
+        <span class="tech-chip">Data Analysis</span>
+        <span class="tech-chip">Stakeholder Mgmt</span>
+        <span class="tech-chip">Policy Research</span>
+      </div>
+      <a href="https://docs.google.com/presentation/d/1kig60PLl8euGzPRN38Ld7I7LLDdwhSOxJOljlB3Rg2Q/edit?usp=sharing" class="project-link" target="_blank">View Presentation →</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-tag">Statistical Modeling</div>
+      <div class="project-title">Factors Behind Social Excellence</div>
+      <div class="project-desc">Analyzed student performance in R Studio to assess the impact of extracurricular activities and parental support on GPA using hypothesis testing and statistical modeling.</div>
+      <div class="project-tech">
+        <span class="tech-chip">R Studio</span>
+        <span class="tech-chip">Hypothesis Testing</span>
+        <span class="tech-chip">Visualization</span>
+      </div>
+      <a href="https://drive.google.com/file/d/1rFyJsuepsontsTvPz5Sm3a76XH79DPhb/view?usp=share_link" class="project-link" target="_blank">View Report →</a>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Toolkit</div>
+  <div class="section-title">Technical Skills</div>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-title">Languages & Tools</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">R / R Studio</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">Excel</span>
+        <span class="skill-tag">Power Query</span>
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">STATA</span>
+        <span class="skill-tag">VS Code</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Libraries & Frameworks</div>
+      <div class="skill-tags">
+        <span class="skill-tag">pandas</span>
+        <span class="skill-tag">NumPy</span>
+        <span class="skill-tag">SciPy</span>
+        <span class="skill-tag">scikit-learn</span>
+        <span class="skill-tag">XGBoost</span>
+        <span class="skill-tag">matplotlib</span>
+        <span class="skill-tag">Seaborn</span>
+        <span class="skill-tag">NLTK</span>
+        <span class="skill-tag">Plotly</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Visualization & BI</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Power BI</span>
+        <span class="skill-tag">Tableau</span>
+        <span class="skill-tag">Jupyter Notebooks</span>
+        <span class="skill-tag">Salesforce CRM</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Data Science</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Machine Learning</span>
+        <span class="skill-tag">Data Wrangling</span>
+        <span class="skill-tag">Statistical Analysis</span>
+        <span class="skill-tag">Data Visualization</span>
+        <span class="skill-tag">Data Cleaning</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label">Background</div>
+  <div class="section-title">Education</div>
+  <div class="edu-grid">
+    <div class="edu-card featured">
+      <div class="edu-badge">✦ Graduating May 2026</div>
+      <div class="edu-degree">Master's of Science in Information & Big Data Analytics</div>
+      <div class="edu-school">University of Michigan — School of Information, Ann Arbor, MI</div>
+      <div class="edu-detail">GPA: 4.0 / 4.0 &nbsp;·&nbsp; Data Science, ML, Data Mining</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-badge">Bachelor's Degree</div>
+      <div class="edu-degree">B.A. in Economics</div>
+      <div class="edu-school">University of Michigan — LSA, Ann Arbor, MI</div>
+      <div class="edu-detail">GPA: 3.5 / 4.0 &nbsp;·&nbsp; Econometrics, Statistics & Probability</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-badge">Bachelor's Degree</div>
+      <div class="edu-degree">B.A. in Pre-Law Studies</div>
+      <div class="edu-school">University of Michigan — LSA, Ann Arbor, MI</div>
+      <div class="edu-detail">GPA: 3.5 / 4.0 &nbsp;·&nbsp; Law & Economics, Ethics & Technology</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrapper">
+    <div>
+      <div class="section-label">Say Hello</div>
+      <div class="contact-title">Let's work<br>together.</div>
+      <p class="contact-body">I'm actively seeking full-time data analyst and data science roles. Whether you have a role, a project, or just want to connect — reach out.</p>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:alogaili@umich.edu" class="contact-link">
+        <div class="contact-icon">✉</div>
+        <div>
+          <div style="font-weight:500; font-size:0.85rem;">Email</div>
+          <div style="color:var(--muted); font-size:0.8rem;">alogaili@umich.edu</div>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/in/alihalogaili/" target="_blank" class="contact-link">
+        <div class="contact-icon">in</div>
+        <div>
+          <div style="font-weight:500; font-size:0.85rem;">LinkedIn</div>
+          <div style="color:var(--muted); font-size:0.8rem;">alihalogaili</div>
+        </div>
+      </a>
+      <a href="tel:5175056010" class="contact-link">
+        <div class="contact-icon">☎</div>
+        <div>
+          <div style="font-weight:500; font-size:0.85rem;">Phone</div>
+          <div style="color:var(--muted); font-size:0.8rem;">(517) 505-6010</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Designed & built for Ali Al-Ogaili &nbsp;·&nbsp; 2026</p>
+</footer>
+
+</body>
+</html>
